@@ -35,4 +35,16 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDAO.deleteCustomer(ID);
 	}
 
+
+	@Override
+	public Customer findById(String param) {
+		return customerDAO.findById(param);
+	}
+
+
+	@Override
+	public Customer findByEmail(String param) {
+		return customerDAO.findByEmail(param);
+	}
+
 }

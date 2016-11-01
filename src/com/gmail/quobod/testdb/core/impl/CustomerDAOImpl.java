@@ -51,5 +51,27 @@ public class CustomerDAOImpl implements CustomerDAO {
 		currentSession.delete(customer);
 	}
 
+	@Override
+	public Customer findById(String param) {
+		Customer customer = null;
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Customer> query = currentSession.createQuery("from Customer where id = '" + param + "'", Customer.class);
+		if (query.getMaxResults() > 0 && null != (customer = query.getSingleResult())) {
+			return customer;
+		}
+		return null;
+	}
+
+	@Override
+	public Customer findByEmail(String param) {
+		Customer customer = null;
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Customer> query = currentSession.createQuery("from Customer where email = '" + param + "'", Customer.class);
+		if (query.getMaxResults() > 0 && null != (customer = query.getSingleResult())) {
+			return customer;
+		}
+		return null;
+	}
+
 	
 }

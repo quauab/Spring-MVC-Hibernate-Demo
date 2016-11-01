@@ -33,16 +33,29 @@ public class CustomerController extends CustomClass {
 	}
 	
 	@GetMapping("/customer")
-	public String theCustomer(HttpServletRequest req) {
-		String id = req.getParameter("id");
-		return null;
+	public String theCustomer(HttpServletRequest req, Model model) {
+		String param = null;
+		Customer customer = null;
+		
+		if (!req.getParameter("id").isEmpty() && null != (param = req.getParameter("id"))) {			
+			if (null != (customer = customerService.findById(param))) {
+				model.addAttribute("customer",customer);
+				return "single-customer";
+			}
+			
+		} else if (!req.getParameter("email").isEmpty() && null != (param = req.getParameter("email"))) {
+			if (null != (customer = customerService.findByEmail(param))) {
+				model.addAttribute("customer",customer);
+				return "single-customer";
+			}
+		} 
+		return "customer-list";
 	}
 	
 	@PostMapping("/addCustomer")
 	public String saveCustomer(HttpServletRequest req) {
 		// validate form parameter values
-		
-		
+				
 		// instantiate a new Customer, then set properties
 		Customer newCustomer = new Customer();
 		newCustomer.setFirstName(req.getParameter("first_name"));
